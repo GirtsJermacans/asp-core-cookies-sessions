@@ -38,6 +38,9 @@ namespace cookiesAndSessions.Controllers
         {
             string newColour = form["pickedColour"].ToString();
             CookieOptions option = new CookieOptions();
+            option.HttpOnly = true;
+            option.Secure = true;
+            option.Path = "/Home/";
             option.Expires = DateTime.Now.AddMinutes(10);
             Response.Cookies.Append("Colour", newColour, option);
             ViewData["myColour"] = newColour;
@@ -84,7 +87,9 @@ namespace cookiesAndSessions.Controllers
         {
             string newName = form["myName"].ToString();
             HttpContext.Session.SetString("Name", newName);
+            HttpContext.Session.SetInt32("Age", 21);
             ViewData["myName"] = newName;
+            ViewData["myAge"] = HttpContext.Session.GetInt32("Age");
             return View();
         }
 
